@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5e41708-654a-44dd-a22e-1e59074f579c" name="Changes" comment="Fixed error page for client app?">
+    <list default="true" id="b5e41708-654a-44dd-a22e-1e59074f579c" name="Changes" comment="Made server app runnable?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1710982785885</updated>
       <workItem from="1710982786967" duration="8649000" />
-      <workItem from="1711119902983" duration="1419000" />
+      <workItem from="1711119902983" duration="7172000" />
     </task>
     <task id="LOCAL-00001" summary="Completed app">
       <option name="closed" value="true" />
@@ -94,7 +94,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711120488888</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Made server app runnable?">
+      <option name="closed" value="true" />
+      <created>1711121573627</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711121573627</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -103,6 +111,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Completed app" />
     <MESSAGE value="Fixed error page for client app?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed error page for client app?" />
+    <MESSAGE value="Made server app runnable?" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made server app runnable?" />
   </component>
 </project>
