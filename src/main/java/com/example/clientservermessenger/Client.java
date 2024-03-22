@@ -22,10 +22,23 @@ public class Client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Socket socket = new Socket("localhost", 1234);
+        try {
+            Socket socket = new Socket("localhost", 1234);
 
-        writer = new PrintWriter(socket.getOutputStream(), true);
-        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer = new PrintWriter(socket.getOutputStream(), true);
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Connection Error");
+            alert.setHeaderText("Could not connect to server");
+            alert.setContentText("Server app must be running, please start the server app.");
+
+            alert.showAndWait();
+
+            // Stop the application
+            Platform.exit();
+            return;
+        }
 
         VBox messagesArea = new VBox();
         messagesArea.setFillWidth(true);
