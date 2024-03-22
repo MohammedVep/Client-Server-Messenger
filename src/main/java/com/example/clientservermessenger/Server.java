@@ -19,15 +19,13 @@ import java.net.*;
 public class Server extends Application {
     private PrintWriter writer;
     private BufferedReader reader;
+    private Label statusLabel;  // to display connection status
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         ServerSocket server = new ServerSocket(1234);
-        Socket clientSocket = server.accept();
 
-        writer = new PrintWriter(clientSocket.getOutputStream(), true);
-        reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
+        statusLabel = new Label("Waiting for client to run...");
         VBox messagesArea = new VBox();
         messagesArea.setFillWidth(true);
         ScrollPane messagesScroll = new ScrollPane(messagesArea);
@@ -37,8 +35,12 @@ public class Server extends Application {
 
         TextField inputField = new TextField();
         inputField.setPromptText("Enter a message");
-        inputField.setOnKeyPressed(e -> writer.println("serverTyping:true"));
-        inputField.setOnKeyReleased(e -> writer.println("serverTyping:false"));
+        inputField.setOnKeyPressed(e -> {
+            if (writer != null) writer.println("serverTyping:true");
+        });
+        inputField.setOnKeyReleased(e -> {
+            if (writer != null) writer.println("serverTyping:false");
+        });
 
         Button sendButton = new Button("Send");
 
@@ -46,7 +48,7 @@ public class Server extends Application {
         Runnable sendMessage = () -> {
             String message = inputField.getText();
             messagesArea.getChildren().add(new MessageBubble("Sent: " + message, false));
-            writer.println(message);
+            if (writer != null) writer.println(message);
             inputField.clear();
         };
 
@@ -59,14 +61,19 @@ public class Server extends Application {
         VBox filler = new VBox();
         VBox.setVgrow(filler, Priority.ALWAYS);  // let the filler always grow vertically
 
-        VBox layout = new VBox(messagesScroll, typingLabel, filler, inputArea);
+        VBox layout = new VBox(statusLabel, messagesScroll, typingLabel, filler, inputArea);  // Include statusLabel in the layout
         primaryStage.setTitle("Server");
         primaryStage.setScene(new Scene(layout, 300, 200));
         primaryStage.show();
 
         new Thread(() -> {
-            String incomingMessage;
             try {
+                Socket clientSocket = server.accept();
+                writer = new PrintWriter(clientSocket.getOutputStream(), true);
+                reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                Platform.runLater(() -> statusLabel.setText("Client is now running."));
+
+                String incomingMessage;
                 while ((incomingMessage = reader.readLine()) != null) {
                     if (incomingMessage.equals("clientTyping:true")) {
                         Platform.runLater(() -> typingLabel.setText("Client is typing..."));
